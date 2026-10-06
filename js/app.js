@@ -5,6 +5,24 @@ const headerObserver = new ResizeObserver(entries=>{
   document.documentElement.style.setProperty('--header-height',entries[0].target.getBoundingClientRect().height+'px');
 });
 headerObserver.observe(document.querySelector('.site-header'));
+// Menú móvil: el estado accesible y la presentación cambian juntos.
+const menuButton = document.querySelector('#menu-toggle');
+const mainNav = document.querySelector('#main-nav');
+function closeMenu() {
+  menuButton.setAttribute('aria-expanded','false');
+  menuButton.setAttribute('aria-label','Abrir menú');
+  mainNav.classList.remove('is-open');
+}
+menuButton.addEventListener('click',()=>{
+  const open=menuButton.getAttribute('aria-expanded')!=='true';
+  menuButton.setAttribute('aria-expanded',String(open));
+  menuButton.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú');
+  mainNav.classList.toggle('is-open',open);
+});
+mainNav.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){closeMenu();menuButton.focus();}});
+document.addEventListener('click',event=>{if(!event.target.closest('.site-header'))closeMenu();});
+matchMedia('(max-width:700px)').addEventListener('change',closeMenu);
 const types = {
   normal:['Normal','#eceef0','#515861'],fire:['Fuego','#ffdfce','#993b13'],water:['Agua','#dbeaff','#215f9e'],electric:['Eléctrico','#fce9a1','#765900'],grass:['Planta','#dcefd8','#38662e'],ice:['Hielo','#d8f3f4','#286567'],fighting:['Lucha','#f4d6d2','#933d32'],poison:['Veneno','#eedcf5','#783e91'],ground:['Tierra','#f1e2cc','#7e5c27'],flying:['Volador','#e5e4fa','#60518d'],psychic:['Psíquico','#ffdae5','#9b355b'],bug:['Bicho','#e6edc7','#5d6d1e'],rock:['Roca','#eae3d2','#73602e'],ghost:['Fantasma','#e4def0','#604b82'],dragon:['Dragón','#dce2fa','#4a54a0'],dark:['Siniestro','#e1dcd9','#594a42'],steel:['Acero','#e1e9ee','#48606d'],fairy:['Hada','#f9dff0','#943d75']
 };
