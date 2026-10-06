@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Consulta la Pokédex de Kanto, ventajas de tipos, líderes y medallas, historia de Rojo Fuego y Verde Hoja y un catálogo de objetos Pokémon."
+    />
+    <title>PokéAtlas | Pokédex, tipos, gimnasios y objetos de Kanto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='white' stroke='%23e74646' stroke-width='4'/%3E%3Cpath d='M2 16h28' stroke='%23e74646' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white' stroke='%23e74646' stroke-width='3'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <!-- Cabecera y navegación: los enlaces llevan a secciones reales. -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#"
+          ><svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="13" />
+            <path d="M3 16h26" />
+            <circle cx="16" cy="16" r="4" fill="white" /></svg
+          >Poké<span>Atlas</span></a
+        >
+        <nav aria-label="Navegación principal">
+          <a href="#pokedex">Pokédex</a><a href="#tipos">Tipos</a
+          ><a href="#historia">Historia</a><a href="#kanto">Gimnasios</a
+          ><a href="#objetos">Objetos</a>
+        </nav>
+        <span class="edition">Guía para entrenadores</span>
+      </div>
+    </header>
+    <main id="contenido" class="container">
+      <section class="intro" aria-labelledby="titulo">
+        <header>
+          <p class="eyebrow">EXPLORA · CONSULTA · DESCUBRE</p>
+          <h1 id="titulo">
+            Tu próxima aventura<br />empieza con <span>una pregunta.</span>
+          </h1>
+          <p>
+            Conoce a tus Pokémon, entiende sus tipos y prepara tu recorrido por
+            Kanto.
+          </p>
+          <nav class="intro-links" aria-label="Accesos rápidos">
+            <a href="#pokedex" class="primary">Explorar Pokédex</a
+            ><a href="#kanto" class="text-link">Consultar gimnasios</a>
+          </nav>
+        </header>
+        <aside class="spotlight" aria-label="Pokémon destacado">
+          <span class="small-label">COMPAÑERO DEL DÍA</span
+          ><img id="featured-image" alt="Pikachu" width="220" height="220" />
+          <div>
+            <h2>Pikachu</h2>
+            <span class="badge electric">Eléctrico</span>
+            <p>#025 · Región de Kanto</p>
+          </div>
+        </aside>
+      </section>
+      <!-- Cada sección tiene un título; los resultados se generan en JavaScript. -->
+      <!-- ==================== POKÉDEX: buscador, filtros y resultados ==================== -->
+      <section id="pokedex" class="section" aria-labelledby="pokedex-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">EXPLORA POR REGIÓN</p>
+            <h2 id="pokedex-title">Encuentra tu Pokémon</h2>
+          </hgroup>
+          <span id="dex-region-label" class="section-note">Kanto</span>
+        </header>
+        <form id="search-form" class="search-bar">
+          <label class="sr-only" for="region-filter"
+            >Región de la Pokédex</label
+          >
+          <select id="region-filter">
+            <option value="national">Todas · Pokédex nacional</option>
+            <option value="kanto" selected>Kanto · Rojo / Azul</option>
+            <option value="updated-johto">
+              Johto · HeartGold / SoulSilver
+            </option>
+            <option value="updated-hoenn">
+              Hoenn · Rubí Omega / Zafiro Alfa
+            </option>
+            <option value="extended-sinnoh">Sinnoh · Platino</option>
+            <option value="updated-unova">Teselia · Negro 2 / Blanco 2</option>
+            <option value="kalos">Kalos · X / Y</option>
+            <option value="updated-alola">Alola · Ultrasol / Ultraluna</option>
+            <option value="galar">Galar · Espada / Escudo y expansiones</option>
+            <option value="hisui">Hisui · Leyendas Arceus</option>
+            <option value="paldea">
+              Paldea · Escarlata / Púrpura y expansiones
+            </option>
+          </select>
+          <div class="search-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10" cy="10" r="6" />
+              <path d="m15 15 5 5" /></svg
+            ><label class="sr-only" for="search"
+              >Nombre o número del Pokémon</label
+            ><input
+              id="search"
+              type="search"
+              placeholder="Busca por nombre o número…"
+              autocomplete="off"
+            />
+          </div>
+          <input type="hidden" id="type-filter" value="" /><button
+            class="primary"
+            type="submit"
+          >
+            Buscar</button
+          ><button id="dex-reset" class="secondary" type="button">
+            Limpiar filtros
+          </button>
+        </form>
+        <div
+          id="dex-types"
+          class="type-buttons"
+          aria-label="Filtrar Pokémon por tipo"
+        >
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="normal"
+            aria-pressed="false"
+            style="--type-bg: #eceef0; --type-ink: #515861"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z" /></svg
+            ><span>Normal</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="fire"
+            aria-pressed="false"
+            style="--type-bg: #ffdfce; --type-ink: #993b13"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3c2 5 6 6 6 11a6 6 0 0 1-12 0c0-4 4-7 6-11Z" /></svg
+            ><span>Fuego</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="water"
+            aria-pressed="false"
+            style="--type-bg: #dbeaff; --type-ink: #215f9e"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3 6 12a7 7 0 1 0 12 0Z" /></svg
+            ><span>Agua</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="electric"
+            aria-pressed="false"
+            style="--type-bg: #fce9a1; --type-ink: #765900"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m13 2-8 12h6l-1 8 9-13h-6Z" /></svg
+            ><span>Eléctrico</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="grass"
+            aria-pressed="false"
+            style="--type-bg: #dcefd8; --type-ink: #38662e"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 4C8 3 3 8 6 16c7 7 14-1 14-12ZM5 20 16 9" /></svg
+            ><span>Planta</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="ice"
+            aria-pressed="false"
+            style="--type-bg: #d8f3f4; --type-ink: #286567"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2v20M3 7l18 10M3 17 21 7" /></svg
+            ><span>Hielo</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="fighting"
+            aria-pressed="false"
+            style="--type-bg: #f4d6d2; --type-ink: #933d32"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 12V7h3V5h3v1h3v2h3v8l-4 4H8l-3-5Z" /></svg
+            ><span>Lucha</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="poison"
+            aria-pressed="false"
+            style="--type-bg: #eedcf5; --type-ink: #783e91"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7 3h10v4l3 10a3 3 0 0 1-3 4H7a3 3 0 0 1-3-4L7 7ZM6 14h12"
+              /></svg
+            ><span>Veneno</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="ground"
+            aria-pressed="false"
+            style="--type-bg: #f1e2cc; --type-ink: #7e5c27"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m3 20 6-15 4 8 3-5 5 12Z" /></svg
+            ><span>Tierra</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="flying"
+            aria-pressed="false"
+            style="--type-bg: #e5e4fa; --type-ink: #60518d"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 17C5 6 14 3 21 4L10 15ZM3 20l10-9" /></svg
+            ><span>Volador</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="psychic"
+            aria-pressed="false"
+            style="--type-bg: #ffdae5; --type-ink: #9b355b"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 12c7-7 13 7 3 8C0 23 0 3 12 3c8 0 11 7 9 12" /></svg
+            ><span>Psíquico</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="bug"
+            aria-pressed="false"
+            style="--type-bg: #e6edc7; --type-ink: #5d6d1e"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M8 8h8l2 5v5l-6 3-6-3v-5ZM8 3l2 5m6-5-2 5M12 9v12"
+              /></svg
+            ><span>Bicho</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="rock"
+            aria-pressed="false"
+            style="--type-bg: #eae3d2; --type-ink: #73602e"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m8 3 9 2 4 10-8 6-9-4L3 9Z" /></svg
+            ><span>Roca</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="ghost"
+            aria-pressed="false"
+            style="--type-bg: #e4def0; --type-ink: #604b82"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M5 21V10a7 7 0 0 1 14 0v11l-4-3-3 3-3-3ZM9 10h1m4 0h1"
+              /></svg
+            ><span>Fantasma</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="dragon"
+            aria-pressed="false"
+            style="--type-bg: #dce2fa; --type-ink: #4a54a0"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m4 20 6-4 1-5-3-3 8-5 4 7-5 1 3 8Z" /></svg
+            ><span>Dragón</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="dark"
+            aria-pressed="false"
+            style="--type-bg: #e1dcd9; --type-ink: #594a42"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17 3A9 9 0 1 0 21 17 9 9 0 0 1 17 3Z" /></svg
+            ><span>Siniestro</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="steel"
+            aria-pressed="false"
+            style="--type-bg: #e1e9ee; --type-ink: #48606d"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="m7 3 10 0 5 9-5 9H7L2 12ZM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+              /></svg
+            ><span>Acero</span>
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-dex-type="fairy"
+            aria-pressed="false"
+            style="--type-bg: #f9dff0; --type-ink: #943d75"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" /></svg
+            ><span>Hada</span>
+          </button>
+        </div>
+        <details class="advanced-search">
+          <summary>Búsqueda avanzada</summary>
+          <fieldset>
+            <legend>Ajustar resultados</legend>
+            <label for="dex-sort">Ordenar por</label
+            ><select id="dex-sort">
+              <option value="number">Número de Pokédex</option>
+              <option value="name">Nombre: A–Z</option></select
+            ><label for="second-type">Segundo tipo (debe tener ambos)</label
+            ><select id="second-type">
+              <option value="">Cualquier segundo tipo</option>
+              <option value="normal">Normal</option>
+              <option value="fire">Fuego</option>
+              <option value="water">Agua</option>
+              <option value="electric">Eléctrico</option>
+              <option value="grass">Planta</option>
+              <option value="ice">Hielo</option>
+              <option value="fighting">Lucha</option>
+              <option value="poison">Veneno</option>
+              <option value="ground">Tierra</option>
+              <option value="flying">Volador</option>
+              <option value="psychic">Psíquico</option>
+              <option value="bug">Bicho</option>
+              <option value="rock">Roca</option>
+              <option value="ghost">Fantasma</option>
+              <option value="dragon">Dragón</option>
+              <option value="dark">Siniestro</option>
+              <option value="steel">Acero</option>
+              <option value="fairy">Hada</option>
+            </select>
+          </fieldset>
+        </details>
+        <p class="dex-note">
+          La lista incluye las especies registradas en la Pokédex del juego
+          indicado; un Pokémon puede aparecer en varias regiones. Las fichas
+          muestran su forma predeterminada.
+        </p>
+        <p id="catalog-status" role="status" class="status">
+          Cargando Pokémon…
+        </p>
+        <div id="pokemon-grid" class="pokemon-grid"></div>
+        <nav class="dex-pagination" aria-label="Páginas de la Pokédex">
+          <button id="dex-prev" type="button" class="secondary" disabled>
+            Anterior</button
+          ><span id="dex-page" role="status">Página 1</span
+          ><button id="dex-next" type="button" class="secondary">
+            Siguiente
+          </button>
+        </nav>
+      </section>
+      <!-- ==================== TIPOS: ventajas y resistencias ==================== -->
+      <section id="tipos" class="section" aria-labelledby="types-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">PREPARA TU ESTRATEGIA</p>
+            <h2 id="types-title">Cada tipo tiene su ventaja</h2>
+          </hgroup>
+        </header>
+        <p>
+          Elige un tipo para consultar la eficacia de sus ataques. Tabla actual;
+          las reglas de los juegos antiguos pueden variar.
+        </p>
+        <div id="type-buttons" class="type-buttons">
+          <button
+            type="button"
+            class="type-button"
+            data-type="normal"
+            aria-pressed="false"
+            style="--type-bg: #eceef0; --type-ink: #515861"
+          >
+            Normal
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="fire"
+            aria-pressed="false"
+            style="--type-bg: #ffdfce; --type-ink: #993b13"
+          >
+            Fuego
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="water"
+            aria-pressed="false"
+            style="--type-bg: #dbeaff; --type-ink: #215f9e"
+          >
+            Agua
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="electric"
+            aria-pressed="false"
+            style="--type-bg: #fce9a1; --type-ink: #765900"
+          >
+            Eléctrico
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="grass"
+            aria-pressed="false"
+            style="--type-bg: #dcefd8; --type-ink: #38662e"
+          >
+            Planta
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="ice"
+            aria-pressed="false"
+            style="--type-bg: #d8f3f4; --type-ink: #286567"
+          >
+            Hielo
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="fighting"
+            aria-pressed="false"
+            style="--type-bg: #f4d6d2; --type-ink: #933d32"
+          >
+            Lucha
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="poison"
+            aria-pressed="false"
+            style="--type-bg: #eedcf5; --type-ink: #783e91"
+          >
+            Veneno
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="ground"
+            aria-pressed="false"
+            style="--type-bg: #f1e2cc; --type-ink: #7e5c27"
+          >
+            Tierra
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="flying"
+            aria-pressed="false"
+            style="--type-bg: #e5e4fa; --type-ink: #60518d"
+          >
+            Volador
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="psychic"
+            aria-pressed="false"
+            style="--type-bg: #ffdae5; --type-ink: #9b355b"
+          >
+            Psíquico
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="bug"
+            aria-pressed="false"
+            style="--type-bg: #e6edc7; --type-ink: #5d6d1e"
+          >
+            Bicho
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="rock"
+            aria-pressed="false"
+            style="--type-bg: #eae3d2; --type-ink: #73602e"
+          >
+            Roca
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="ghost"
+            aria-pressed="false"
+            style="--type-bg: #e4def0; --type-ink: #604b82"
+          >
+            Fantasma
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="dragon"
+            aria-pressed="false"
+            style="--type-bg: #dce2fa; --type-ink: #4a54a0"
+          >
+            Dragón
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="dark"
+            aria-pressed="false"
+            style="--type-bg: #e1dcd9; --type-ink: #594a42"
+          >
+            Siniestro
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="steel"
+            aria-pressed="false"
+            style="--type-bg: #e1e9ee; --type-ink: #48606d"
+          >
+            Acero
+          </button>
+          <button
+            type="button"
+            class="type-button"
+            data-type="fairy"
+            aria-pressed="false"
+            style="--type-bg: #f9dff0; --type-ink: #943d75"
+          >
+            Hada
+          </button>
+        </div>
+        <div id="type-result" class="type-result" role="status">
+          Selecciona un tipo para ver sus relaciones.
+        </div>
+      </section>
+      <!-- ==================== KANTO: líderes y medallas ==================== -->
+      <section id="kanto" class="section" aria-labelledby="kanto-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">REGIÓN 01</p>
+            <h2 id="kanto-title">Un recorrido por Kanto</h2>
+          </hgroup>
+          <span class="pill">Rojo Fuego · Verde Hoja</span>
+        </header>
+        <div class="region-overview">
+          <div>
+            <h3>De Pueblo Paleta a la Liga Pokémon</h3>
+            <p>
+              El profesor Oak, tres Pokémon iniciales y ocho medallas. Consulta
+              los gimnasios y sus ciudades antes de continuar tu viaje.
+            </p>
+            <a
+              class="text-link"
+              href="https://bulbapedia.bulbagarden.net/wiki/Kanto"
+              target="_blank"
+              rel="noopener"
+              >Consultar la región en Bulbapedia</a
+            >
+          </div>
+          <dl class="region-stats">
+            <div>
+              <dt>Gimnasios</dt>
+              <dd>8</dd>
+            </div>
+            <div>
+              <dt>Pokémon originales</dt>
+              <dd>151</dd>
+            </div>
+            <div>
+              <dt>Profesor</dt>
+              <dd>Oak</dd>
+            </div>
+          </dl>
+        </div>
+        <!-- Información estática de los líderes: solo HTML. -->
+        <div class="gym-grid">
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-brock.png"
+              alt="Brock, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">01</span>
+            <h3>Brock</h3>
+            <p>Ciudad Plateada</p>
+            <span class="badge" style="--type-bg: #eae3d2; --type-ink: #73602e"
+              >Roca</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-boulder.png"
+                alt="Medalla Roca"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Roca</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-misty.png"
+              alt="Misty, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">02</span>
+            <h3>Misty</h3>
+            <p>Ciudad Celeste</p>
+            <span class="badge" style="--type-bg: #dbeaff; --type-ink: #215f9e"
+              >Agua</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-cascade.png"
+                alt="Medalla Cascada"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Cascada</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-lt_surge.png"
+              alt="Lt. Surge, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">03</span>
+            <h3>Lt. Surge</h3>
+            <p>Ciudad Carmín</p>
+            <span class="badge" style="--type-bg: #fce9a1; --type-ink: #765900"
+              >Eléctrico</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-thunder.png"
+                alt="Medalla Trueno"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Trueno</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-erika.png"
+              alt="Erika, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">04</span>
+            <h3>Erika</h3>
+            <p>Ciudad Azulona</p>
+            <span class="badge" style="--type-bg: #dcefd8; --type-ink: #38662e"
+              >Planta</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-rainbow.png"
+                alt="Medalla Arcoíris"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Arcoíris</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-koga.png"
+              alt="Koga, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">05</span>
+            <h3>Koga</h3>
+            <p>Ciudad Fucsia</p>
+            <span class="badge" style="--type-bg: #eedcf5; --type-ink: #783e91"
+              >Veneno</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-soul.png"
+                alt="Medalla Alma"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Alma</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-sabrina.png"
+              alt="Sabrina, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">06</span>
+            <h3>Sabrina</h3>
+            <p>Ciudad Azafrán</p>
+            <span class="badge" style="--type-bg: #ffdae5; --type-ink: #9b355b"
+              >Psíquico</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-marsh.png"
+                alt="Medalla Pantano"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Pantano</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-blaine.png"
+              alt="Blaine, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">07</span>
+            <h3>Blaine</h3>
+            <p>Isla Canela</p>
+            <span class="badge" style="--type-bg: #ffdfce; --type-ink: #993b13"
+              >Fuego</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-volcano.png"
+                alt="Medalla Volcán"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Volcán</figcaption>
+            </figure>
+          </article>
+          <article class="gym-card">
+            <img
+              class="leader-image"
+              src="images/leader-giovanni.png"
+              alt="Giovanni, líder de gimnasio"
+              width="128"
+              height="128"
+            />
+            <span class="gym-number">08</span>
+            <h3>Giovanni</h3>
+            <p>Ciudad Verde</p>
+            <span class="badge" style="--type-bg: #f1e2cc; --type-ink: #7e5c27"
+              >Tierra</span
+            >
+            <figure class="gym-medal">
+              <img
+                src="images/badge-earth.png"
+                alt="Medalla Tierra"
+                width="48"
+                height="48"
+              />
+              <figcaption class="medal">Medalla Tierra</figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+      <!-- ==================== HISTORIA: introducción, protagonistas y Pueblo Paleta ==================== -->
+      <section id="historia" class="section" aria-labelledby="history-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">EL COMIENZO DEL VIAJE</p>
+            <h2 id="history-title">Historia e inicio de la aventura</h2>
+          </hgroup>
+          <span class="pill">Rojo Fuego · Verde Hoja</span>
+        </header>
+        <p id="history-status" role="status" class="status">
+          Consultando la historia en Wikipedia…
+        </p>
+        <button id="history-retry" type="button" class="secondary" hidden>
+          Reintentar consulta
+        </button>
+        <div id="history-content" hidden>
+          <div class="history-grid">
+            <div class="history-sidebar">
+              <article class="history-intro">
+                <h3>Sobre los juegos</h3>
+                <div id="history-intro"></div>
+              </article>
+              <figure class="pallet-town">
+                <img
+                  src="images/pallet-town.png"
+                  alt="Mapa de Pueblo Paleta en Rojo Fuego y Verde Hoja, con las casas de los protagonistas y el laboratorio del profesor Oak"
+                  width="384"
+                  height="320"
+                />
+                <figcaption>
+                  <strong>Pueblo Paleta</strong
+                  ><span>El punto de partida de tu aventura en Kanto.</span
+                  ><a
+                    href="https://archives.bulbagarden.net/wiki/File:Pallet_Town_FRLG.png"
+                    target="_blank"
+                    rel="noopener"
+                    >Rojo Fuego / Verde Hoja · Imagen: Bulbagarden Archives</a
+                  >
+                </figcaption>
+              </figure>
+            </div>
+            <article class="history-start">
+              <h3>Así comienza tu aventura</h3>
+              <!-- Los dos protagonistas acompañan la introducción; no son controles. -->
+              <div
+                class="protagonists"
+                aria-label="Protagonistas de Rojo Fuego y Verde Hoja"
+              >
+                <figure>
+                  <img
+                    src="images/red.png"
+                    alt="Rojo, protagonista masculino de Rojo Fuego y Verde Hoja"
+                    width="128"
+                    height="128"
+                  />
+                  <figcaption>
+                    <strong>Rojo</strong><span>Protagonista masculino</span>
+                  </figcaption>
+                </figure>
+                <figure>
+                  <img
+                    src="images/leaf.png"
+                    alt="Hoja, protagonista femenina de Rojo Fuego y Verde Hoja"
+                    width="128"
+                    height="128"
+                  />
+                  <figcaption>
+                    <strong>Hoja</strong><span>Protagonista femenina</span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div id="history-start"></div>
+            </article>
+          </div>
+          <details class="history-spoilers">
+            <summary>
+              Leer el resto del argumento <span>Contiene spoilers</span>
+            </summary>
+            <div id="history-plot"></div>
+          </details>
+          <p class="history-credit">
+            Extractos de
+            <a id="history-source" target="_blank" rel="noopener"
+              >Wikipedia en español</a
+            >, consultados mediante su API. Texto de sus colaboradores bajo
+            <a
+              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              target="_blank"
+              rel="noopener"
+              >CC BY-SA 4.0</a
+            >. Se muestran fragmentos del artículo, sin modificar su redacción.
+          </p>
+        </div>
+      </section>
+      <!-- ==================== GUÍA DE VIAJE: rival y objetos básicos ==================== -->
+      <section id="guia" class="section" aria-labelledby="guide-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">LO ESENCIAL PARA TU VIAJE</p>
+            <h2 id="guide-title">Rivales y objetos</h2>
+          </hgroup>
+          <span class="pill">Kanto · Rojo Fuego / Verde Hoja</span>
+        </header>
+        <div class="guide-grid">
+          <article class="rival-card">
+            <p class="rival-label">TU PRIMER DESAFÍO</p>
+            <h3>Azul, tu rival</h3>
+            <p>
+              El nieto del profesor Oak elige el inicial con ventaja de tipo
+              frente al tuyo. Su equipo cambia según tu elección y el momento de
+              la historia.
+            </p>
+            <table class="starter-matchups">
+              <caption class="sr-only">
+                Pokémon inicial de Azul según tu elección
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Tu inicial</th>
+                  <th scope="col">El de Azul</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Bulbasaur</th>
+                  <td>Charmander</td>
+                </tr>
+                <tr>
+                  <th scope="row">Charmander</th>
+                  <td>Squirtle</td>
+                </tr>
+                <tr>
+                  <th scope="row">Squirtle</th>
+                  <td>Bulbasaur</td>
+                </tr>
+              </tbody>
+            </table>
+            <a
+              class="rival-source"
+              href="https://bulbapedia.bulbagarden.net/wiki/Blue_(game)"
+              target="_blank"
+              rel="noopener"
+              >Consultar encuentros y equipos</a
+            >
+          </article>
+          <section class="travel-items">
+            <h3 class="items-heading">Lo básico en tu mochila</h3>
+            <p class="muted">
+              Cuatro objetos útiles al comenzar. Efectos de Rojo Fuego y Verde
+              Hoja.
+            </p>
+            <div class="item-grid">
+              <article class="item-card">
+                <header class="travel-item-heading">
+                  <div class="travel-item-image">
+                    <img
+                      data-item="poke-ball"
+                      alt="Poké Ball"
+                      width="56"
+                      height="56"
+                      hidden
+                    />
+                  </div>
+                  <h4>Poké Ball</h4>
+                </header>
+                <p>Permite intentar capturar un Pokémon salvaje.</p>
+              </article>
+              <article class="item-card">
+                <header class="travel-item-heading">
+                  <div class="travel-item-image">
+                    <img
+                      data-item="potion"
+                      alt="Poción"
+                      width="56"
+                      height="56"
+                      hidden
+                    />
+                  </div>
+                  <h4>Poción</h4>
+                </header>
+                <p>Restaura 20 PS de un Pokémon.</p>
+              </article>
+              <article class="item-card">
+                <header class="travel-item-heading">
+                  <div class="travel-item-image">
+                    <img
+                      data-item="antidote"
+                      alt="Antídoto"
+                      width="56"
+                      height="56"
+                      hidden
+                    />
+                  </div>
+                  <h4>Antídoto</h4>
+                </header>
+                <p>Cura el envenenamiento.</p>
+              </article>
+              <article class="item-card">
+                <header class="travel-item-heading">
+                  <div class="travel-item-image">
+                    <img
+                      data-item="revive"
+                      alt="Revivir"
+                      width="56"
+                      height="56"
+                      hidden
+                    />
+                  </div>
+                  <h4>Revivir</h4>
+                </header>
+                <p>
+                  Reanima a un Pokémon debilitado con la mitad de sus PS
+                  máximos.
+                </p>
+              </article>
+            </div>
+            <a class="text-link all-items-link" href="#objetos"
+              >Explorar todos los objetos</a
+            >
+          </section>
+        </div>
+      </section>
+      <!-- ==================== OBJETOS: búsqueda, categorías y catálogo ==================== -->
+      <section id="objetos" class="section" aria-labelledby="items-title">
+        <header class="section-heading">
+          <hgroup>
+            <p class="eyebrow">PREPARA TU MOCHILA</p>
+            <h2 id="items-title">Catálogo de objetos</h2>
+          </hgroup>
+          <span class="pill">Datos de PokéAPI</span>
+        </header>
+        <p>
+          Catálogo general de la saga. La descripción indica su versión de
+          referencia; no todos los objetos están disponibles en todos los
+          juegos.
+        </p>
+        <form id="item-search-form" class="item-search-form">
+          <label for="item-search">Buscar por nombre o número</label>
+          <div>
+            <input
+              id="item-search"
+              type="search"
+              placeholder="Ejemplo: Master, poción o 17"
+              autocomplete="off"
+            /><label class="sr-only" for="item-category"
+              >Categoría de objetos</label
+            ><select id="item-category">
+              <option value="">Todas las categorías</option></select
+            ><button type="submit" class="primary">Buscar objeto</button
+            ><button id="item-reset" type="button" class="secondary">
+              Limpiar filtros
+            </button>
+          </div>
+        </form>
+        <p id="items-status" class="status" role="status">Cargando objetos…</p>
+        <div id="api-item-grid" class="api-item-grid"></div>
+        <nav
+          class="dex-pagination"
+          aria-label="Páginas del catálogo de objetos"
+        >
+          <button id="items-prev" type="button" class="secondary" disabled>
+            Anterior
+          </button>
+          <span id="items-page" role="status">Página 1</span>
+          <button id="items-next" type="button" class="secondary">
+            Siguiente
+          </button>
+        </nav>
+      </section>
+      <section
+        class="adventure-video section"
+        aria-labelledby="adventure-title"
+      >
+        <header class="adventure-copy">
+          <p class="eyebrow">VUELVE A KANTO</p>
+          <h2 id="adventure-title">¿Listo para tu próxima aventura?</h2>
+          <p>
+            Revive los primeros pasos en Pueblo Paleta y descubre tu próximo
+            compañero en la Pokédex.
+          </p>
+        </header>
+        <figure class="game-video">
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/TnFd7OoPm9k"
+              title="Pokémon Rojo Fuego en español: primera parte, Pueblo Paleta"
+              loading="lazy"
+              allow="encrypted-media; picture-in-picture; fullscreen"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <figcaption>
+            Pokémon Rojo Fuego · Inicio de la aventura
+            <a
+              href="https://www.youtube.com/watch?v=TnFd7OoPm9k"
+              target="_blank"
+              rel="noopener"
+              >Ver en YouTube</a
+            >
+          </figcaption>
+        </figure>
+      </section>
+    </main>
+    <!-- Footer: identidad, navegación y fuentes; se apila en móviles. -->
+    <!-- ==================== FOOTER: enlaces y fuentes ==================== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <a class="brand" href="#" aria-label="PokéAtlas, volver al inicio"
+              ><svg viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="13" />
+                <path d="M3 16h26" />
+                <circle cx="16" cy="16" r="4" fill="white" /></svg
+              >Poké<span>Atlas</span></a
+            >
+            <p>
+              Tu guía de consulta para conocer Pokémon y recorrer Kanto, una
+              medalla a la vez.
+            </p>
+            <span class="footer-label">Hecho para fans de Pokémon</span>
+            <a
+              class="github-link"
+              href="https://github.com/luisbravobello"
+              target="_blank"
+              rel="noopener"
+              aria-label="Visitar el perfil de Luis Bravo Bello en GitHub"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 .75a11.25 11.25 0 0 0-3.558 21.924c.563.104.769-.244.769-.543 0-.267-.01-.975-.015-1.914-3.129.68-3.789-1.508-3.789-1.508-.512-1.3-1.25-1.647-1.25-1.647-1.023-.7.078-.686.078-.686 1.131.08 1.726 1.161 1.726 1.161 1.006 1.724 2.639 1.226 3.281.938.102-.73.394-1.227.716-1.51-2.498-.284-5.124-1.249-5.124-5.563 0-1.23.44-2.235 1.16-3.022-.116-.285-.503-1.43.11-2.981 0 0 .946-.303 3.095 1.154a10.79 10.79 0 0 1 5.632 0c2.149-1.457 3.094-1.154 3.094-1.154.614 1.55.227 2.696.112 2.98.722.788 1.158 1.793 1.158 3.023 0 4.325-2.63 5.276-5.136 5.554.404.35.765 1.041.765 2.1 0 1.518-.014 2.743-.014 3.115 0 .302.203.653.774.542A11.252 11.252 0 0 0 12 .75Z"
+                />
+              </svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+          <nav class="footer-nav" aria-labelledby="footer-explore">
+            <h2 id="footer-explore">Explora</h2>
+            <a href="#pokedex">Pokédex de Kanto</a>
+            <a href="#tipos">Tipos y ventajas</a>
+            <a href="#historia">Historia e inicio</a>
+
+            <a href="#objetos">Catálogo de objetos</a>
+            <a href="#kanto">Región y gimnasios</a>
+            <a href="#guia">Rivales y objetos</a>
+          </nav>
+          <section class="footer-sources">
+            <h2>Fuentes de la guía</h2>
+            <a href="https://pokeapi.co/docs/v2" target="_blank" rel="noopener"
+              >PokéAPI <span>Pokémon y relaciones entre tipos</span></a
+            >
+            <a
+              href="https://bulbapedia.bulbagarden.net/wiki/Kanto"
+              target="_blank"
+              rel="noopener"
+              >Bulbapedia <span>Región, personajes y gimnasios</span></a
+            >
+            <a
+              href="https://github.com/pret/pokefirered/blob/master/src/data/trainer_parties.h"
+              target="_blank"
+              rel="noopener"
+              >Datos de Rojo Fuego
+              <span>Sprites de líderes · pret/pokefirered</span></a
+            >
+          </section>
+        </div>
+      </div>
+    </footer>
+    <!-- Plantillas: HTML define la estructura; JavaScript rellena los datos de la API. -->
+    <template id="pokemon-card-template"
+      ><button type="button" class="pokemon-card">
+        <div class="art-frame">
+          <img loading="lazy" width="150" height="150" alt="" />
+        </div>
+        <span class="number"></span>
+        <h3></h3>
+        <div class="badges"></div></button
+    ></template>
+    <template id="pokemon-detail-template"
+      ><div>
+        <div class="detail-top">
+          <img alt="" />
+          <p class="muted"></p>
+          <h2></h2>
+          <div class="badges"></div>
+        </div>
+        <div class="detail-meta"></div>
+        <h3>Estadísticas base</h3>
+        <div class="stats"></div>
+        <h3>Habilidades</h3>
+        <p class="abilities"></p>
+        <section class="evolution-section" aria-labelledby="evolution-title">
+          <h3 id="evolution-title">Línea evolutiva</h3>
+          <p id="evolution-status" role="status">Consultando evoluciones…</p>
+          <ul id="evolution-list" class="evolution-list"></ul>
+        </section></div
+    ></template>
+    <template id="stat-template"
+      ><div class="stat">
+        <span class="stat-label"></span><progress max="255"></progress
+        ><span class="stat-value"></span></div
+    ></template>
+    <template id="item-card-template"
+      ><article class="api-item-card">
+        <header>
+          <img width="64" height="64" loading="lazy" alt="" />
+          <span class="item-image-fallback" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3" />
+              <circle cx="8" cy="8" r="1.5" />
+              <path d="m4 18 5-5 4 3 3-4 4 6" />
+            </svg>
+            <span>Imagen no disponible</span>
+          </span>
+          <div>
+            <h3></h3>
+            <span class="item-id"></span>
+          </div>
+        </header>
+        <p></p>
+        <small></small><span class="pill"></span></article
+    ></template>
+    <template id="relations-template"
+      ><div class="relations">
+        <div>
+          <h3>Eficaz ×2</h3>
+          <div data-relation="double_damage_to"></div>
+        </div>
+        <div>
+          <h3>Poco eficaz ×½</h3>
+          <div data-relation="half_damage_to"></div>
+        </div>
+        <div>
+          <h3>Sin efecto ×0</h3>
+          <div data-relation="no_damage_to"></div>
+        </div></div
+    ></template>
+    <!-- El diálogo nativo admite teclado, Escape y manejo de foco. -->
+    <dialog id="pokemon-dialog">
+      <button
+        id="close-dialog"
+        class="close-button"
+        aria-label="Cerrar ficha"
+        type="button"
+      >
+        Cerrar <span aria-hidden="true">×</span>
+      </button>
+      <div id="pokemon-detail"></div>
+    </dialog>
+    <template id="evolution-template"
+      ><li>
+        <button type="button">
+          <img width="64" height="64" alt="" /><span></span>
+        </button></li
+    ></template>
+  </body>
+</html>
