@@ -11,7 +11,6 @@ El proyecto está construido con **HTML, CSS y JavaScript**, sin frameworks. Su 
 - Selector de región y juego, incluida la Pokédex nacional.
 - Búsqueda por nombre completo, nombre parcial o número nacional.
 - Filtro por tipo con iconos SVG.
-- Búsqueda avanzada con segundo tipo y orden por número o nombre.
 - Botón para limpiar filtros.
 - Paginación de 12 Pokémon por página.
 - Fichas con imagen, tipos, altura, peso, estadísticas, habilidades y familia evolutiva.
@@ -68,10 +67,20 @@ pokeatlas/
 ├── index.html          # Estructura semántica y plantillas
 ├── README.md           # Documentación del proyecto
 ├── assets/
-│   └── style.css       # Estilos y reglas adaptables
+│   ├── style.css       # Estilos y reglas adaptables
+│   └── design-system.css # Jerarquía, retícula y sistema visual de WebLab
 ├── images/             # Líderes, medallas, protagonistas y Pueblo Paleta
 └── js/
-    └── app.js          # Funcionalidades y consultas externas
+    ├── app.js             # Punto de entrada: inicia los módulos
+    ├── api.js             # Consultas a PokéAPI y caché de respuestas
+    ├── navigation.js      # Cabecera y menú móvil
+    ├── pokedex.js         # Búsqueda, regiones, tipos y paginación
+    ├── pokemon-detail.js  # Ficha modal y evoluciones
+    ├── pokemon-ui.js      # Imágenes y etiquetas compartidas
+    ├── type-chart.js      # Ventajas y resistencias de tipos
+    ├── items.js           # Catálogo, categorías y búsqueda de objetos
+    ├── history.js         # Historia consultada en Wikipedia
+    └── images.js          # Imágenes del destacado y objetos frecuentes
 ```
 
 ## Cómo abrirlo localmente
@@ -81,6 +90,26 @@ pokeatlas/
 3. Consulta la dirección local que indique la extensión.
 
 También puedes utilizar cualquier servidor HTTP estático que sirva esta carpeta. No hay un proceso de compilación ni dependencias de ejecución que instalar.
+
+### Organización del JavaScript
+
+Se usan módulos nativos del navegador (`import` y `export`). Cada módulo mantiene su propio estado y tiene una responsabilidad concreta: **alta cohesión**. Las consultas comunes están en `api.js` y los recursos visuales de Pokémon en `pokemon-ui.js`, para evitar duplicaciones.
+
+La Pokédex recibe una función para abrir las fichas; no conoce los controles ni el estado del diálogo. La historia, los objetos y la navegación funcionan de forma independiente: **bajo acoplamiento**. Los comentarios explican la responsabilidad de cada archivo y decisiones como la caché o el control de peticiones antiguas.
+
+Abre el proyecto con un servidor HTTP como Live Server; los módulos no deben ejecutarse abriendo `index.html` directamente con `file://`.
+
+### Principios de WebLab aplicados
+
+- **Jerarquía y contraste:** títulos con tamaños fluidos, etiquetas visibles y rojo oscuro para las acciones principales.
+- **Retícula de 12 columnas:** portada 7/5, historia y guía 5/7, tarjetas de Pokémon 3 columnas de la retícula y objetos 4. En pantallas pequeñas, el contenido se reorganiza.
+- **Sistema de 8 puntos:** variables de 8, 16, 24, 32, 48 y 64 px para separar controles, tarjetas y secciones.
+- **Tipografía:** Fredoka expresa la identidad de la guía; Nunito mantiene legible el texto. Los párrafos largos tienen un ancho controlado.
+- **Color:** se aplica la idea de 60-30-10 como orientación: blanco dominante, superficies suaves para agrupar y rojo como acento. Los colores de tipos conservan su significado Pokémon; no se fuerzan porcentajes exactos.
+- **C.R.A.P.:** contraste entre niveles, repetición de componentes, alineación sobre la retícula y proximidad entre contenido relacionado.
+- **Accesibilidad:** foco visible, enlace para saltar al contenido, controles de al menos 44 px, etiquetas asociadas y respeto por la preferencia de movimiento reducido.
+
+Estas decisiones están comentadas en `assets/design-system.css`; el contenido sigue en HTML y las funcionalidades en los módulos JavaScript.
 
 Se necesita conexión a internet para las APIs, las imágenes externas, Google Fonts y el video. Si no ves una modificación reciente, recarga con **Ctrl + F5**.
 

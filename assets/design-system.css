@@ -1,0 +1,576 @@
+/* PRINCIPIOS DE WEBLAB APLICADOS A POKÉATLAS
+ * Blanco dominante, superficies suaves y rojo reservado para acciones.
+ * Retícula de 12 columnas y escala de espaciado basada en 8 px.
+ * Este archivo reúne las decisiones de diseño de toda la guía.
+ */
+:root {
+  --ink: #233047;
+  --muted: #526176;
+  --red: #c82d39;
+  --line: #dbe2ea;
+  --soft: #f4f7fa;
+  --accent-soft: #fff1f2;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --radius: 16px;
+  --shadow: 0 8px 24px #2330470b;
+}
+
+/* 1. Jerarquía: tamaños fluidos y líneas de texto fáciles de recorrer. */
+body {
+  line-height: 1.7;
+}
+h1 {
+  font-size: clamp(2.5rem, 4.8vw, 4rem);
+  margin-bottom: var(--space-3);
+}
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+h3 {
+  font-size: 1.5rem;
+}
+h4 {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+p {
+  text-wrap: pretty;
+}
+.eyebrow,
+.small-label,
+.rival-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+.eyebrow {
+  color: var(--red);
+}
+.container,
+.header-inner {
+  width: min(1200px, calc(100% - 48px));
+}
+html {
+  scroll-padding-top: calc(var(--header-height, 80px) + 24px);
+}
+
+/* 2. Alineación: cada distribución se apoya en la misma retícula. */
+.intro,
+.region-overview,
+.history-grid,
+.guide-grid,
+.adventure-video,
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.intro {
+  padding: var(--space-8) 0;
+}
+.intro > header {
+  grid-column: span 7;
+}
+.intro > aside {
+  grid-column: span 5;
+}
+.intro > header > p:not(.eyebrow) {
+  max-width: 50ch;
+  font-size: 1.125rem;
+}
+.intro-links {
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+.spotlight {
+  padding: var(--space-3);
+  border: 1px solid #e9dca1;
+  border-radius: 24px;
+}
+.spotlight img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+.spotlight h2 {
+  font-size: 2rem;
+}
+.spotlight p {
+  color: #65592f;
+}
+.region-overview > div,
+.region-overview > dl {
+  grid-column: span 6;
+}
+.history-sidebar {
+  grid-column: span 5;
+  gap: var(--space-3);
+}
+.history-start {
+  grid-column: span 7;
+}
+.guide-grid > .rival-card {
+  grid-column: span 5;
+}
+.guide-grid > .travel-items {
+  grid-column: span 7;
+}
+.adventure-copy {
+  grid-column: span 5;
+}
+.game-video {
+  grid-column: span 7;
+}
+.footer-about {
+  grid-column: span 5;
+}
+.footer-grid > nav {
+  grid-column: span 3;
+}
+.footer-sources {
+  grid-column: span 4;
+}
+
+/* 3. Proximidad: más espacio entre secciones que dentro de una tarjeta. */
+.section {
+  padding: var(--space-8) 0;
+}
+.section-heading {
+  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.section-heading hgroup {
+  border-left: 4px solid var(--red);
+  padding-left: var(--space-2);
+}
+.section-heading .eyebrow {
+  margin-bottom: var(--space-1);
+}
+.section-heading > .pill,
+.section-heading > .section-note {
+  padding: 8px 16px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  font-size: 0.875rem;
+}
+.section > p:not(.status) {
+  max-width: 80ch;
+}
+.history-grid article,
+.rival-card,
+.region-overview {
+  padding: var(--space-4);
+  border-radius: var(--radius);
+}
+.history-grid p,
+.history-spoilers p {
+  line-height: 1.8;
+  margin-bottom: var(--space-3);
+}
+.protagonists {
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.protagonists figure {
+  padding: var(--space-2);
+}
+.history-spoilers {
+  margin-top: var(--space-3);
+}
+.history-credit {
+  font-size: 0.875rem;
+}
+.pallet-town figcaption {
+  padding: var(--space-3);
+}
+.region-overview {
+  background: var(--soft);
+  margin-bottom: var(--space-3);
+}
+.region-stats {
+  gap: var(--space-2);
+}
+
+/* 4. Repetición: superficies, tarjetas y controles comparten proporciones. */
+.pokemon-grid,
+.gym-grid,
+.api-item-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.pokemon-card {
+  grid-column: span 3;
+  padding: var(--space-2);
+}
+.gym-card {
+  grid-column: span 6;
+  padding: var(--space-3);
+}
+.api-item-card {
+  grid-column: span 4;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+}
+.pokemon-card,
+.gym-card,
+.api-item-card,
+.rival-card {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.art-frame {
+  background: var(--soft);
+  border-radius: 12px;
+  margin-bottom: var(--space-2);
+}
+.pokemon-card:hover {
+  border-color: var(--red);
+}
+.pokemon-card h3 {
+  font-size: 1.375rem;
+  margin: 8px 0 16px;
+}
+.api-item-card p {
+  margin: var(--space-2) 0;
+}
+.api-item-card small {
+  margin-top: auto;
+}
+.api-item-card .pill {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+.gym-card .gym-number {
+  color: var(--muted);
+}
+.gym-medal {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  gap: var(--space-2);
+}
+.item-grid {
+  gap: var(--space-2);
+}
+.item-card {
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+}
+.relations {
+  gap: var(--space-3);
+}
+.type-result {
+  padding: var(--space-3);
+}
+.type-buttons {
+  gap: var(--space-1);
+  margin: var(--space-3) 0;
+}
+.type-button,
+#dex-types button {
+  min-height: 44px;
+  padding: 8px 16px;
+}
+.type-button[aria-pressed="true"] {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  font-weight: 800;
+}
+.primary,
+.secondary {
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+}
+.primary:hover {
+  background: #a8202b;
+}
+.secondary {
+  border-color: var(--line);
+}
+button:disabled {
+  opacity: 1;
+  color: var(--muted);
+  background: var(--soft);
+  cursor: default;
+}
+.dex-pagination {
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* 5. Formularios: etiquetas visibles y controles agrupados por su función. */
+#search-form,
+#item-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) auto auto;
+  gap: var(--space-2);
+  align-items: end;
+  padding: var(--space-3);
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0 0 var(--space-3);
+}
+#item-search-form {
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto auto;
+}
+.form-control {
+  min-width: 0;
+}
+.form-control label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 800;
+  margin-bottom: var(--space-1);
+}
+.form-control input,
+.form-control select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #aebccb;
+  border-radius: 12px;
+  background: white;
+  color: var(--ink);
+}
+input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.status {
+  margin: var(--space-3) 0;
+  color: var(--muted);
+}
+.status.error {
+  color: #ad202d;
+}
+
+/* 6. Accesibilidad: foco visible, enlaces reconocibles y cabecera compacta. */
+:where(a, button, input, select, summary):focus-visible {
+  outline: 3px solid #1763b3;
+  outline-offset: 4px;
+}
+.skip-link {
+  z-index: 40;
+}
+.header-inner {
+  min-height: 80px;
+  padding: 0;
+  flex-wrap: nowrap;
+}
+#main-nav {
+  gap: var(--space-1);
+}
+#main-nav a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+#main-nav a:hover,
+#main-nav a[aria-current="location"] {
+  color: var(--red);
+  background: var(--accent-soft);
+}
+.edition {
+  color: var(--muted);
+}
+.history-credit a,
+.pallet-town a,
+.rival-source,
+.game-video a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer-grid {
+  padding: var(--space-6) 0;
+}
+.footer-nav {
+  gap: var(--space-1);
+}
+.footer-nav a,
+.footer-sources > a {
+  padding: 8px 0;
+}
+.footer-sources > a {
+  margin-top: 8px;
+}
+.site-footer {
+  margin-top: 0;
+}
+.adventure-copy h2 {
+  max-width: 16ch;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* 7. Adaptación: la retícula pasa a dos columnas y después a una. */
+@media (max-width: 1000px) {
+  .edition {
+    display: none;
+  }
+  #search-form,
+  #item-search-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .intro > header,
+  .intro > aside {
+    grid-column: span 6;
+  }
+  .spotlight {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .spotlight img {
+    width: 160px;
+    margin: auto;
+  }
+  .pokemon-card,
+  .api-item-card {
+    grid-column: span 4;
+  }
+}
+@media (max-width: 700px) {
+  .container,
+  .header-inner {
+    width: calc(100% - 32px);
+  }
+  .intro {
+    padding: 32px 0;
+  }
+  .section {
+    padding: var(--space-6) 0;
+  }
+  .intro > header,
+  .intro > aside,
+  .region-overview > div,
+  .region-overview > dl,
+  .history-sidebar,
+  .history-start,
+  .guide-grid > .rival-card,
+  .guide-grid > .travel-items,
+  .adventure-copy,
+  .game-video {
+    grid-column: 1 / -1;
+  }
+  .spotlight {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    text-align: left;
+  }
+  .spotlight img {
+    width: 100%;
+    max-width: 176px;
+  }
+  .section-heading {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .pokemon-card,
+  .api-item-card {
+    grid-column: span 6;
+  }
+  .gym-card {
+    grid-column: 1 / -1;
+  }
+  .pokemon-grid,
+  .gym-grid,
+  .api-item-grid {
+    gap: var(--space-2);
+  }
+  .history-grid article,
+  .region-overview,
+  .rival-card {
+    padding: var(--space-3);
+  }
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+  .footer-grid > nav,
+  .footer-sources {
+    grid-column: span 6;
+  }
+  .site-header .header-inner {
+    min-height: 72px;
+    padding: 8px 0;
+  }
+  #main-nav {
+    padding-top: var(--space-2);
+  }
+  #main-nav a {
+    display: flex;
+    padding: 12px;
+  }
+}
+@media (max-width: 480px) {
+  #search-form,
+  #item-search-form {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+  .form-control {
+    grid-column: 1 / -1;
+  }
+  #search-form > button,
+  #item-search-form > button {
+    padding: 12px 8px;
+    font-size: 0.875rem;
+  }
+  .api-item-card {
+    grid-column: 1 / -1;
+  }
+  .pokemon-card {
+    padding: 12px;
+  }
+  .pokemon-card h3 {
+    font-size: 1.125rem;
+    overflow-wrap: anywhere;
+  }
+  .art-frame {
+    height: 136px;
+  }
+  .art-frame img {
+    width: 112px;
+    height: 112px;
+  }
+  .badge {
+    padding: 4px 8px;
+    margin: 0 4px 4px 0;
+  }
+  .relations,
+  .item-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid > nav,
+  .footer-sources {
+    grid-column: 1 / -1;
+  }
+  .dex-pagination {
+    gap: var(--space-1);
+  }
+  .dex-pagination button {
+    padding: 12px 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pokemon-card {
+    transition: none;
+  }
+  .pokemon-card:hover {
+    transform: none;
+  }
+}

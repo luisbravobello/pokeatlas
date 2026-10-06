@@ -58,7 +58,8 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='white' stroke='%23e74646' stroke-width='4'/%3E%3Cpath d='M2 16h28' stroke='%23e74646' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white' stroke='%23e74646' stroke-width='3'/%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="assets/style.css" />
-    <script src="js/app.js" defer></script>
+    <link rel="stylesheet" href="assets/design-system.css" />
+    <script type="module" src="js/app.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -130,47 +131,47 @@
           <span id="dex-region-label" class="section-note">Kanto</span>
         </header>
         <form id="search-form" class="search-bar">
-          <label class="sr-only" for="region-filter"
-            >Región de la Pokédex</label
-          >
-          <select id="region-filter">
-            <option value="national">Todas · Pokédex nacional</option>
-            <option value="kanto" selected>Kanto · Rojo / Azul</option>
-            <option value="updated-johto">
-              Johto · HeartGold / SoulSilver
-            </option>
-            <option value="updated-hoenn">
-              Hoenn · Rubí Omega / Zafiro Alfa
-            </option>
-            <option value="extended-sinnoh">Sinnoh · Platino</option>
-            <option value="updated-unova">Teselia · Negro 2 / Blanco 2</option>
-            <option value="kalos">Kalos · X / Y</option>
-            <option value="updated-alola">Alola · Ultrasol / Ultraluna</option>
-            <option value="galar">Galar · Espada / Escudo y expansiones</option>
-            <option value="hisui">Hisui · Leyendas Arceus</option>
-            <option value="paldea">
-              Paldea · Escarlata / Púrpura y expansiones
-            </option>
-          </select>
-          <div class="search-field">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="10" cy="10" r="6" />
-              <path d="m15 15 5 5" /></svg
-            ><label class="sr-only" for="search"
-              >Nombre o número del Pokémon</label
-            ><input
+          <div class="form-control">
+            <label for="region-filter">Región de la Pokédex</label>
+            <select id="region-filter">
+              <option value="national">Todas · Pokédex nacional</option>
+              <option value="kanto" selected>Kanto · Rojo / Azul</option>
+              <option value="updated-johto">
+                Johto · HeartGold / SoulSilver
+              </option>
+              <option value="updated-hoenn">
+                Hoenn · Rubí Omega / Zafiro Alfa
+              </option>
+              <option value="extended-sinnoh">Sinnoh · Platino</option>
+              <option value="updated-unova">
+                Teselia · Negro 2 / Blanco 2
+              </option>
+              <option value="kalos">Kalos · X / Y</option>
+              <option value="updated-alola">
+                Alola · Ultrasol / Ultraluna
+              </option>
+              <option value="galar">
+                Galar · Espada / Escudo y expansiones
+              </option>
+              <option value="hisui">Hisui · Leyendas Arceus</option>
+              <option value="paldea">
+                Paldea · Escarlata / Púrpura y expansiones
+              </option>
+            </select>
+          </div>
+          <div class="form-control">
+            <label for="search">Nombre o número del Pokémon</label>
+            <input
               id="search"
               type="search"
-              placeholder="Busca por nombre o número…"
+              placeholder="Ejemplo: Pikachu o 25"
               autocomplete="off"
+              aria-describedby="dex-note"
             />
           </div>
-          <input type="hidden" id="type-filter" value="" /><button
-            class="primary"
-            type="submit"
-          >
-            Buscar</button
-          ><button id="dex-reset" class="secondary" type="button">
+          <input type="hidden" id="type-filter" value="" />
+          <button class="primary" type="submit">Buscar</button>
+          <button id="dex-reset" class="secondary" type="button">
             Limpiar filtros
           </button>
         </form>
@@ -386,39 +387,7 @@
             ><span>Hada</span>
           </button>
         </div>
-        <details class="advanced-search">
-          <summary>Búsqueda avanzada</summary>
-          <fieldset>
-            <legend>Ajustar resultados</legend>
-            <label for="dex-sort">Ordenar por</label
-            ><select id="dex-sort">
-              <option value="number">Número de Pokédex</option>
-              <option value="name">Nombre: A–Z</option></select
-            ><label for="second-type">Segundo tipo (debe tener ambos)</label
-            ><select id="second-type">
-              <option value="">Cualquier segundo tipo</option>
-              <option value="normal">Normal</option>
-              <option value="fire">Fuego</option>
-              <option value="water">Agua</option>
-              <option value="electric">Eléctrico</option>
-              <option value="grass">Planta</option>
-              <option value="ice">Hielo</option>
-              <option value="fighting">Lucha</option>
-              <option value="poison">Veneno</option>
-              <option value="ground">Tierra</option>
-              <option value="flying">Volador</option>
-              <option value="psychic">Psíquico</option>
-              <option value="bug">Bicho</option>
-              <option value="rock">Roca</option>
-              <option value="ghost">Fantasma</option>
-              <option value="dragon">Dragón</option>
-              <option value="dark">Siniestro</option>
-              <option value="steel">Acero</option>
-              <option value="fairy">Hada</option>
-            </select>
-          </fieldset>
-        </details>
-        <p class="dex-note">
+        <p id="dex-note" class="dex-note">
           La lista incluye las especies registradas en la Pokédex del juego
           indicado; un Pokémon puede aparecer en varias regiones. Las fichas
           muestran su forma predeterminada.
@@ -1088,22 +1057,25 @@
           juegos.
         </p>
         <form id="item-search-form" class="item-search-form">
-          <label for="item-search">Buscar por nombre o número</label>
-          <div>
+          <div class="form-control">
+            <label for="item-search">Nombre o número del objeto</label>
             <input
               id="item-search"
               type="search"
               placeholder="Ejemplo: Master, poción o 17"
               autocomplete="off"
-            /><label class="sr-only" for="item-category"
-              >Categoría de objetos</label
-            ><select id="item-category">
-              <option value="">Todas las categorías</option></select
-            ><button type="submit" class="primary">Buscar objeto</button
-            ><button id="item-reset" type="button" class="secondary">
-              Limpiar filtros
-            </button>
+            />
           </div>
+          <div class="form-control">
+            <label for="item-category">Categoría de objetos</label>
+            <select id="item-category">
+              <option value="">Todas las categorías</option>
+            </select>
+          </div>
+          <button type="submit" class="primary">Buscar objeto</button>
+          <button id="item-reset" type="button" class="secondary">
+            Limpiar filtros
+          </button>
         </form>
         <p id="items-status" class="status" role="status">Cargando objetos…</p>
         <div id="api-item-grid" class="api-item-grid"></div>
@@ -1309,4 +1281,3 @@
     ></template>
   </body>
 </html>
-

@@ -1634,29 +1634,6 @@ html {
   stroke-linejoin: round;
   stroke-linecap: round;
 }
-.advanced-search {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 16px 20px;
-  margin-bottom: 16px;
-}
-.advanced-search summary {
-  cursor: pointer;
-  font-weight: 800;
-}
-.advanced-search fieldset {
-  display: grid;
-  grid-template-columns: auto 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-  border: 0;
-  padding: 15px 0 0;
-  margin: 0;
-}
-.advanced-search legend {
-  font-weight: 800;
-  padding-top: 15px;
-}
 .dex-pagination {
   display: flex;
   justify-content: center;
@@ -1697,9 +1674,6 @@ html {
   #search-form .search-field {
     grid-column: 1 / -1;
   }
-  .advanced-search fieldset {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 @media (max-width: 600px) {
   #search-form {
@@ -1707,13 +1681,6 @@ html {
   }
   #region-filter {
     grid-column: 1 / -1;
-  }
-  .advanced-search fieldset {
-    grid-template-columns: 1fr;
-  }
-  .advanced-search select {
-    min-width: 0;
-    width: 100%;
   }
   #dex-types {
     gap: 7px;
