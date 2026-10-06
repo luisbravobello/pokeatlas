@@ -328,6 +328,18 @@ button:disabled {
 .form-control {
   min-width: 0;
 }
+/* Cada campo apila su etiqueta y control; evita heredar la antigua retícula. */
+#item-search-form > .form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+#item-search-form input,
+#item-search-form select {
+  width: 100%;
+  flex: initial;
+}
 .form-control label {
   display: block;
   font-size: 0.875rem;
